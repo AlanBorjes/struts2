@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Strust2CRUD:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Strust2CRUD</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Strust2CRUD.war">
+      <element id="artifact" artifact-name="Strust2CRUD:war exploded" />
+    </root>
+  </artifact>
+</component>
