@@ -3,18 +3,34 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-    <package name="default" extends="struts-default">
-        <action name="registeruser" class="action.RegisterAction">
-            <result name="REGISTER">/register.jsp</result>
+    <constant name="struts.devMode" value="true" />
+
+    <package name="Strust2CRUD" extends="struts-default,json-default">
+        <interceptors>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="json"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <action name="index">
+            <result>/index.jsp</result>
         </action>
-        <action name="report" class="action.ReportAction">
-            <result name="REPORT">/report.jsp</result>
+        <action name="register" class="model.CategoryAction" method="execute">
+            <result name="input" type="json"/>
+            <result name="success" type="json"/>
         </action>
-        <action name="updatedetails" class="action.UpdateAction">
-            <result name="UPDATE">/update.jsp</result>
+        <action name="findAll" class="model.FindAllAction" method="execute">
+            <result name="success" type="json"/>
         </action>
-        <action name="deleterecord" class="action.DeleteAction">
-            <result name="DELETE">/delete.jsp</result>
+        <action name="registerProducto" class="producto.ProductosAction" method="execute">
+            <result name="input" type="json"/>
+            <result name="success" type="json"/>
+        </action>
+        <action name="findAllProducto" class="producto.ProductoFindAllAction" method="execute">
+            <result name="success" type="json"/>
+        </action>
+        <action name="modifProducto" class="producto.ProductoModif" method="execute">
+            <result name="success" type="json"/>
         </action>
     </package>
 </struts>
