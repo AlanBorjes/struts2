@@ -23,6 +23,12 @@ public class ProductosAction extends ActionSupport {
         result.put("registered", productoDao.register(producto));
         return SUCCESS;
     }
+    public String delete() throws Exception {
+        Gson gs = new Gson();
+        producto = gs.fromJson(params,Producto.class);
+        result.put("deleted",productoDao.delete(producto));
+        return SUCCESS;
+    }
 
     public void setProducto(Producto producto) {
         this.producto = producto;

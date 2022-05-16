@@ -16,6 +16,8 @@ public class ProductoModif extends ActionSupport {
 
 
     public String execute() throws Exception {
+        Gson gs = new Gson();
+        producto = gs.fromJson(params,Producto.class);
         result.put("registered", productoDao.update(producto));
         return SUCCESS;
     }

@@ -4,7 +4,7 @@
         <button
                 class="navbar-toggler"
                 type="button"
-                data-bs-toggle="collapse"
+                    data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
@@ -15,12 +15,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="./index.html"
-                    >Productos</a
+                    <a class="nav-link active" aria-current="page" href="categoria.jsp"
+                    >Categoria</a
                     >
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./categoria.html">Categoria</a>
+                    <a class="nav-link" href="index.jsp">Productos</a>
                 </li>
             </ul>
         </div>

@@ -12,72 +12,81 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.2.21/angular-route.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
-<body ng-controller="controladorProductos">
+<body ng-controller="controladorProductos" style=" background: #e8cbc0;
+    background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
+    background: linear-gradient(to right, #e8cbc0, #636fa4);
+    min-height: 100vh;">
 <!-- Menu -->
 <div ng-include src="'./plantilla/nav.html'"></div>
 <!-- Fin Menu -->
-<div class="container">
-    <div style="margin-top: 20px">
-        <h1 style="font-size: 50px; font-style: oblique">Tienda Don Pancho</h1>
-    </div>
-
-    <div style="margin-top: 20px">
-        <div class="row ">
-            <div class="col-10">
+<div class="container" style=" background: #e8cbc0;
+    background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
+    background: linear-gradient(to right, #e8cbc0, #636fa4);
+    min-height: 100vh;">
+    <div class="row ">
+        <div class="d-md-flex justify-content-md-end ">
+            <div class="row">
+            <div style="margin-top: 20px" class="col-12">
+                <h1 style="font-size: 50px; font-style: oblique">Tienda Don Pancho</h1>
+            </div>
+            <div style="margin-top: 20px" class="col-12">
                 <div class="row">
-                        <span style="margin-left: 15px;" class="input-group-text col-1"
-                              id="inputGroup-sizing-sm">Buscar</span>
-                    <input type="text" class="col-10" aria-label="Sizing example input"
-                           aria-describedby="inputGroup-sizing-sm" ng-model="busqueda" />
+                    <div class="col-10">
+                        <div class="row">
+                            <span class="input-group-text col-2" id="inputGroup-sizing-sm">Buscar</span>
+                            <input type="search" class="col-10" aria-label="Sizing example input"
+                                   aria-describedby="inputGroup-sizing-sm" ng-model="busqueda"
+                                   placeholder="Zucaritas" />
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Registrar Producto
-                </button>
             </div>
         </div>
+
         <!-- Inicio tabla -->
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-dark table-hover" style="margin-top: 10px; text-align: center">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Categoría</th>
-                        <th scope="col">
-                            Unidades <br />
-                            Existentes
-                        </th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat=" producto in  data.productoList | filter: busqueda  ">
-                        <td>{{producto.id}}</td>
-                        <td>{{producto.nombre}}</td>
-                        <td>{{producto.marca}}</td>
-                        <td>{{producto.precio | currency:"$"}}</td>
-                        <td>{{producto.category.nombre}}</td>
-                        <td>{{producto.unidades}}</td>
-                        <td>
-                            <a class="btn btn-danger btn-primary" style="margin: 10px;"
-                               ng-click="ElminarProducto()">Elminar
-                            </a>
-                            <button class="btn btn-info" style="margin: 10px;" ng-click="modify(producto.id)" data-bs-toggle="modal" data-bs-target="#ModalModificar"   >Modificar</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="m-0 row justify-content-center">
+            <div class="col-auto p-5" ng-if="(data.productoList | filter : busqueda) == '' ">
+                <span class="badge rounded-pill" style="background-color: #003049; font-size: 18px;">No hay
+                    registros</span>
             </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+            <div  class="col-lg-3 col-md-6 mb-4 mb-lg-0" style="margin-top: 15px" ng-repeat="producto in data.productoList | filter : busqueda">
+                <div class="card rounded shadow-sm border-0">
+                    <div class="card-body">
+                        <h2 class="card-title">{{producto.nombre|uppercase}}</h2>
+                        <h6>{{producto.category.nombre}}</h6>
+                        <p class="small text-muted font-italic">{{producto.precio | currency:"$"}} - Unidades disponibles:
+                            {{producto.unidades}} </p>
+                        <p class="card-text">{{producto.description}}</p>
+                        <button type="button" ng-click="modify(producto.id)" data-bs-toggle="modal"
+                                data-bs-target="#ModalModificar" class="btn btn-warning"><i
+                                class="fas fa-edit"></i></button>
+                        <button class="btn" ng-click="delete(producto.id)"
+                                style="background-color: #D62828; color: white;"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
         </div>
         <!-- Fin tabla -->
     </div>
+    <!-- Fin tabla -->
+</div>
 
 
     <!-- Inicio Modal -->
@@ -201,7 +210,7 @@
         </div>
     </div>
 
-</div>
+</body>
 <!-- Fin Modal -->
 
 <script>
@@ -278,9 +287,8 @@
 
     });
 </script>
-
+<script src="./estilos/estilo.css"></script>
+<script src="https://kit.fontawesome.com/afd8979cda.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-</body>
-

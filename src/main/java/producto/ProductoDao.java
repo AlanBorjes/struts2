@@ -37,15 +37,33 @@ public class ProductoDao {
         return state;
     }
 
+    public boolean delete(Producto producto){
+        boolean state = false;
+        try{
+            con = ConnectionMysql.getConnection();
+            String query = "delete from productos where id = ?;";
+            pstm = con.prepareStatement(query);
+            pstm.setInt(1, producto.getId());
+            state = pstm.executeUpdate() == 1;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }finally{
+            closeConnection();
+        }
+        return state;
+    }
+
     public boolean update(Producto producto){
         boolean state = false;
+        System.out.println(producto.getCategory());
         try {
+            System.out.println(producto);
             con = ConnectionMysql.getConnection();
             String query = "UPDATE tienda.productos SET  marca = ?, precio = ?, categoria = ?, nombre = ?,unidades= ?, descripcion = ? WHERE id = ?;\n";
             pstm = con.prepareStatement(query);
             pstm.setString(1, producto.getMarca());
             pstm.setInt(2, producto.getPrecio());
-            pstm.setInt(3,producto.getCategory().getId() );;
+            pstm.setInt(3,producto.getCategory().getId());
             pstm.setString(4, producto.getNombre());
             pstm.setInt(5, producto.getUnidades());
             pstm.setString(6,producto.getDescription());

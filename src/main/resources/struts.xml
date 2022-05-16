@@ -31,6 +31,17 @@
         </action>
         <action name="modifProducto" class="producto.ProductoModif" method="execute">
             <result name="success" type="json"/>
+
         </action>
+        <action name="delete" class="producto.ProductosAction" method="delete">
+             <result name="success" type="json"/>
+        </action>
+        <action name="categoria" >
+            <result name="success">/categoria.jsp</result>
+        </action>
+        <action name="productos" >
+            <result name="success">/index.jsp</result>
+        </action>
+
     </package>
 </struts>
