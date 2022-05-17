@@ -2,6 +2,7 @@ package model;
 
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
+import producto.Producto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,24 @@ public class CategoryAction extends ActionSupport {
         result.put("registered",categoryDao.register(category));
         return SUCCESS;
     }
+
+    public String delete() throws Exception {
+        Gson gs = new Gson();
+        category = gs.fromJson(params, Category.class);
+        result.put("deleted",categoryDao.delete(category));
+        return SUCCESS;
+    }
+
+    public String update() throws Exception {
+        Gson gs = new Gson();
+        category = gs.fromJson(params,Category.class);
+        if (category.getNombre().equals("") || category.getDescripcion().equals("")){
+            return ERROR;
+        }
+            result.put("updated",categoryDao.update(category));
+        return SUCCESS;
+    }
+
 
     public void setCategory(Category category) {
         this.category = category;

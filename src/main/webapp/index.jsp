@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Tienda</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="./estilos/estilo.css">
+    <link rel="stylesheet" href="estilo.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
@@ -25,18 +25,47 @@
     background: linear-gradient(to right, #e8cbc0, #636fa4);
     min-height: 100vh;">
 <!-- Menu -->
-<div ng-include src="'./nav.jsp'"></div>
-<!-- Fin Menu -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Tienda</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active"  href="categoria.jsp"
+                    >Categoria</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.jsp">Productos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav><!-- Fin Menu -->
 <div class="container">
     <div class="row ">
         <div class="d-md-flex justify-content-center ">
             <div class="row">
                 <div style="margin-top: 20px" class="col-12">
-                    <h1 style="font-size: 50px; font-style: oblique; text-align: center">Tienda Don Pancho
+                    <h1 style="font-size: 50px; font-family: Georgia; text-align: center">Tienda Don Pancho
                     </h1>
                 </div>
                 <div style="margin-top: 20px" class="col-12">
                     <div class="row" style="margin-left: 10px;">
+                            <div class="col-12 d-md-flex justify-content-center  " >
+                                <h1 style="font-family: Palatino">Productos</h1>
+                            </div>
                         <div class="col-10">
                             <div class="row">
                                 <span class="input-group-text col-2" id="inputGroup-sizing-sm">Buscar</span>
@@ -112,48 +141,55 @@
                 <div class="mb-3 row">
                     <label class="col-sm-10 col-form-label">Nombre del Producto :</label>
                     <div class="col-sm-12">
-                        <input ng-change="validate()" type="text" class="form-control" ng-model="producto.nombre" />
+                        <input ng-change="validate()" type="text" class="form-control" ng-model="producto.nombre" required  />
                         <span style="color: #D62828;" ng-show="errorNombre">El nombre es requerido</span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-10 col-form-label">Marca del Producto</label>
                     <div class="col-sm-12">
-                        <input ng-change="validate()" type="text" class="form-control" ng-model="producto.marca" />
+                        <input ng-change="validate()" type="text" class="form-control" ng-model="producto.marca" required/>
                         <span style="color: #D62828;" ng-show="errorMarca">La marca es requerida</span>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Precio del Producto</label>
-                    <div class="col-sm-12">
-                        <input type="number" class="form-control" ng-model="producto.precio" />
-                        <span style="color: #D62828;" ng-show="errorPrecio">El precio es requerido</span>
-                    </div>
-                </div>
+
                 <div class="mb-3 row">
                     <div class="mb-3 row">
                         <label for="mySelect" class="col-5">Categoria del Producto:</label>
 
                         <div class="col-sm-12">
-                            <select class="form-select" aria-label="Default select example"   name="mySelect" id="mySelect"
+                            <select ng-change="validate()" class="form-select" aria-label="Default select example"   name="mySelect" id="mySelect"
                                     ng-options="category.nombre for category in catef.categoryList track by category.id"
-                                    ng-model="producto.category"></select>
+                                    ng-model="producto.category" required></select>
                         </div>
                         <span style="color: #D62828;" ng-show="errorCategoria">La Categoria es requerido</span>
                     </div>
                 </div>
-
                 <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Unidades del Producto</label>
-                    <div class="col-sm-12">
-                        <input type="number" class="form-control" ng-model="producto.unidades" />
-                        <span style="color: #D62828;" ng-show="errorUnidades">La Unidades es requerido</span>
+                    <div class="col-6 row">
+                        <label class="col-sm-10 col-form-label">Precio del Producto</label>
+                        <div class="col-sm-12">
+                            <input ng-change="validate()" type="number" class="form-control" ng-model="producto.precio" />
+                            <span style="color: #D62828;" ng-show="errorPrecio" required>El precio es requerido</span>
+                        </div>
                     </div>
+
+                    <div class="col-6 row">
+                        <label class="col-sm-10 col-form-label">Unidades disponibles</label>
+                        <div class="col-sm-12">
+                            <input ng-change="validate()" type="number" class="form-control" ng-model="producto.unidades" required/>
+                            <span style="color: #D62828;" ng-show="errorUnidades">La Unidades es requerido</span>
+                        </div>
+                    </div>
+
                 </div>
+
                 <div class="mb-3 row">
                     <label class="col-sm-10 col-form-label">Descripcion del Producto</label>
                     <div class="col-sm-12">
-                        <textarea rows="5" cols="30" class="form-control" aria-label="With textarea" ng-model="producto.description"></textarea>
+                        <textarea ng-change="validate()" rows="5" cols="30" class="form-control" aria-label="With textarea" ng-model="producto.description" required></textarea>
+                        <span style="color: #D62828;"  ng-show="errorDescription">La Unidades es requerido</span>
+
                     </div>
                 </div>
             </div>
@@ -161,7 +197,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <a class="btn btn-info btn-primary" ng-click="register()" data-bs-dismiss="modal">Save
+                <a class="btn btn-info btn-primary"  ng-click="register()" data-bs-dismiss="modal">Save
                 </a>
             </div>
         </div>
@@ -342,40 +378,40 @@
 
         $scope.modificar = () => {
             Swal.fire({
-                title: '¿Quieres modificar la categoría?',
+                title: '¿Quieres modificar el producto?',
                 showCancelButton: true,
                 confirmButtonText: 'Modificar',
                 cancelButtonText: 'Cancelar',
                 icon: 'question'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let categoryModify = new Object();
-                    categoryModify.id = $scope.id
-                    categoryModify.nombre = $scope.nombre
-                    categoryModify.marca = $scope.marca
-                    categoryModify.precio = $scope.precio
-                    categoryModify.unidades = $scope.unidades
-                    categoryModify.category = $scope.category
-                    categoryModify.description = $scope.description
+                    let productoModify = new Object();
+                    productoModify.id = $scope.id
+                    productoModify.nombre = $scope.nombre
+                    productoModify.marca = $scope.marca
+                    productoModify.precio = $scope.precio
+                    productoModify.unidades = $scope.unidades
+                    productoModify.category = $scope.category
+                    productoModify.description = $scope.description
                     $http({
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
                         url: 'http://localhost:8080/Strust2CRUD/modifProducto',
-                        data: "params=" + JSON.stringify(categoryModify),
+                        data: "params=" + JSON.stringify(productoModify),
                     }).then(function successCallback(response) {
-                        $scope.getAll()
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: '¡Se ha modificado la categoría!',
+                            title: '¡Se ha modificado la producto!',
                             showConfirmButton: false,
                             timer: 1500
                         })
-                    }, function errorCallback(response) {
+                        $scope.getAll()
+                    }.catch (function errorCallback(response) {
                         console.log("aadadaa");
-                    });
+                    }));
                 }
             })
 
@@ -389,6 +425,8 @@
             cancelButtonText: 'Cancelar',
             icon: 'question'
         }).then((result) => {
+            console.log($scope.producto)
+
             if (result.isConfirmed) {
                 $http({
                     method: 'POST',
@@ -397,6 +435,7 @@
                     },
                     url: 'http://localhost:8080/Strust2CRUD/registerProducto',
                     data: "params=" + JSON.stringify($scope.producto),
+
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     $scope.errorMarca = false;
@@ -412,7 +451,12 @@
                     })
                     $scope.getAll()
                 }, function errorCallback(response) {
-                    console.log("aadadaa");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Hubo un error    ',
+
+                    })
                 });
             }
         })
@@ -433,6 +477,7 @@
             }
 
         }
+
         $scope.delete = (id) => {
             let categoryDelete = new Object();
             categoryDelete.id = id
@@ -457,6 +502,7 @@
                         $scope.errorName = false;
                         $scope.category = {}
                         $scope.goRegister = true;
+                        if (response.result.delete != false){
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -464,26 +510,47 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Hubo un error    ',
+                            })
+                        }
                         $scope.getAll()
-                    }, function errorCallback(response) {
+                    }.catch( function errorCallback(response) {
                         console.log("aaa");
-                    });
+                    }));
                 }
             })
 
         }
+
         $scope.validate = () => {
             if ($scope.producto.nombre == undefined || $scope.producto.nombre === "") {
                 $scope.errorNombre = true;
-                $scope.goRegister = true;
             } else
             if ($scope.producto.marca == undefined || $scope.producto.marca === "") {
                 $scope.errorMarca = true;
-                $scope.goRegister = true;
-            } else {
+            } else
+            if($scope.producto.precio == undefined || $scope.producto.precio === ""){
+                $scope.errorPrecio = true;
+            }else
+            if($scope.producto.category == undefined || $scope.producto.category === ""){
+                $scope.errorcategory = true;
+            }else
+            if($scope.producto.unidades == undefined || $scope.producto.unidades === ""){
+                $scope.errorUnidades = true;
+            }else
+            if($scope.producto.description == undefined || $scope.producto.description === ""){
+                $scope.errorDescription = true;
+            }else {
                 $scope.errorMarca = false;
                 $scope.errorNombre= false;
-                $scope.goRegister = false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
             }
         }
     });

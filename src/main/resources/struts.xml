@@ -31,7 +31,6 @@
         </action>
         <action name="modifProducto" class="producto.ProductoModif" method="execute">
             <result name="success" type="json"/>
-
         </action>
         <action name="delete" class="producto.ProductosAction" method="delete">
              <result name="success" type="json"/>
@@ -41,6 +40,12 @@
         </action>
         <action name="productos" >
             <result name="success">/index.jsp</result>
+        </action>
+        <action name="deleteCategory" class="model.CategoryAction" method="delete">
+            <result name="success" type="json"/>
+        </action>
+        <action name="modifCategory" class="model.CategoryAction" method="update">
+            <result name="success" type="json"/>
         </action>
 
     </package>

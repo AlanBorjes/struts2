@@ -1,4 +1,5 @@
 package model;
+import producto.Producto;
 import utils.ConnectionMysql;
 
 import java.sql.*;
@@ -73,6 +74,42 @@ public class CategoryDao {
         }
         return category;
     }
+    public boolean delete(Category category){
+        boolean state = false;
+        try{
+            con = ConnectionMysql.getConnection();
+            String query = "delete from category where id = ?;";
+            pstm = con.prepareStatement(query);
+            pstm.setInt(1, category.getId());
+            state = pstm.executeUpdate() == 1;
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }finally{
+            closeConnection();
+        }
+        return state;
+    }
+
+    public boolean update(Category category){
+        boolean state = false;
+        try {
+            con = ConnectionMysql.getConnection();
+            String query = "UPDATE tienda.category SET   nombre = ?, descripcion = ? WHERE id = ?;\n";
+            pstm = con.prepareStatement(query);
+            pstm.setString(1, category.getNombre());
+            pstm.setString(2,category.getDescripcion());
+            pstm.setInt(3,category.getId());
+            state = pstm.executeUpdate() == 1;
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }finally {
+            closeConnection();
+        }
+        return state;
+
+    }
+
+
     public void closeConnection(){
         try{
             if(con != null){
