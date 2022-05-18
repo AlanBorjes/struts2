@@ -5,7 +5,7 @@
 <struts>
     <constant name="struts.devMode" value="true" />
 
-    <package name="Strust2CRUD" extends="struts-default,json-default">
+    <package name="Strust2CRUD" namespace="" extends="struts-default,json-default">
         <interceptors>
             <interceptor-stack name="myStack">
                 <interceptor-ref name="json"/>
@@ -20,6 +20,11 @@
             <result name="success" type="json"/>
         </action>
         <action name="findAll" class="model.FindAllAction" method="execute">
+
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="findCategory"  class="producto.ProductoFindAllAction" method="info" >
             <result name="success" type="json"/>
         </action>
         <action name="registerProducto" class="producto.ProductosAction" method="execute">

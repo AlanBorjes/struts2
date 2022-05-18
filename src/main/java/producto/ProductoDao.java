@@ -20,7 +20,7 @@ public class ProductoDao {
         boolean state = false;
         try{
             con = ConnectionMysql.getConnection();
-            String query = "insert into productos(marca, precio, categoria, nombre, unidades, descripcion) values(?,?,?,?,?,?);";
+            String query = "insert into productos(marca, precio, categoria, nombre, unidades, descripcion,image) values(?,?,?,?,?,?,?);";
             pstm = con.prepareStatement(query);
             pstm.setString(1, producto.getNombre());
             pstm.setInt(2, producto.getPrecio());
@@ -28,6 +28,7 @@ public class ProductoDao {
             pstm.setString(4,producto.getNombre());
             pstm.setInt(5,producto.getUnidades());
             pstm.setString(6,producto.getDescription());
+            pstm.setString(7,producto.getImage());
             state = pstm.executeUpdate() == 1;
         }catch (SQLException ex) {
             ex.printStackTrace();
@@ -59,7 +60,7 @@ public class ProductoDao {
         try {
             System.out.println(producto);
             con = ConnectionMysql.getConnection();
-            String query = "UPDATE tienda.productos SET  marca = ?, precio = ?, categoria = ?, nombre = ?,unidades= ?, descripcion = ? WHERE id = ?;\n";
+            String query = "UPDATE tienda.productos SET  marca = ?, precio = ?, categoria = ?, nombre = ?,unidades= ?, descripcion = ?, image = ? WHERE id = ?;\n";
             pstm = con.prepareStatement(query);
             pstm.setString(1, producto.getMarca());
             pstm.setInt(2, producto.getPrecio());
@@ -67,7 +68,8 @@ public class ProductoDao {
             pstm.setString(4, producto.getNombre());
             pstm.setInt(5, producto.getUnidades());
             pstm.setString(6,producto.getDescription());
-            pstm.setInt(7,producto.getId());
+            pstm.setString(7,producto.getImage());
+            pstm.setInt(8,producto.getId());
             state = pstm.executeUpdate() == 1;
         }catch (SQLException ex){
             ex.printStackTrace();
@@ -80,8 +82,9 @@ public class ProductoDao {
     public List<Producto> findAll(){
         List<Producto> productoList = new ArrayList<>();
         try{
+
             con = ConnectionMysql.getConnection();
-            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion from productos;";
+            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion,productos.image from productos;";
             statement = con.createStatement();
             rs = statement.executeQuery(query);
             while(rs.next()){
@@ -92,6 +95,7 @@ public class ProductoDao {
                 producto.setNombre(rs.getString("nombre"));
                 producto.setUnidades(rs.getInt("unidades"));
                 producto.setDescription(rs.getString("descripcion"));
+                producto.setImage(rs.getString("image"));
                 Category category = new Category();
                 int opc = rs.getInt("categoria");
                 CategoryDao categoryDao = new CategoryDao();
@@ -103,6 +107,40 @@ public class ProductoDao {
         }catch(SQLException ex){
             ex.printStackTrace();
             return null;
+        }finally{
+            closeConnection();
+        }
+        return productoList;
+    }
+
+    public List<Producto> findbyCategory(Category category){
+        List<Producto> productoList = new ArrayList<>();
+        System.out.println(category);
+        try {
+            System.out.println(category);
+            con = ConnectionMysql.getConnection();
+            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion ,productos.image from tienda.productos where categoria= ?;";
+            pstm = con.prepareStatement(query);
+            pstm.setInt(1,category.getId());
+            rs = pstm.executeQuery();
+            while(rs.next()){
+                Producto producto = new Producto();
+                producto.setId(rs.getInt("id"));
+                producto.setMarca(rs.getString("marca"));
+                producto.setPrecio(rs.getInt("precio"));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setUnidades(rs.getInt("unidades"));
+                producto.setDescription(rs.getString("descripcion"));
+                producto.setImage(rs.getString("image"));
+                Category categoryy = new Category();
+                int opc = rs.getInt("categoria");
+                CategoryDao categoryDao = new CategoryDao();
+                categoryy = categoryDao.findby(opc);
+                producto.setCategory(categoryy);
+                productoList.add(producto);
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
         }finally{
             closeConnection();
         }

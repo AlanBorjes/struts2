@@ -4,26 +4,19 @@ import model.Category;
 
 public class Producto {
     private int id = 0;
-    private String marca= "";
+    private String marca = "";
     private int precio = 0;
-    private Category category ;
-    private String nombre= "";
+    private Category category;
+    private String nombre = "";
     private int unidades = 0;
-    private String description="";
+    private String description = "";
+
+    private String image = "";
 
     public Producto() {
     }
 
-    public Producto(String marca, int precio, Category category, String nombre, int unidades, String description) {
-        this.marca = marca;
-        this.precio = precio;
-        this.category = category;
-        this.nombre = nombre;
-        this.unidades = unidades;
-        this.description = description;
-    }
-
-    public Producto(int id, String marca, int precio, Category category, String nombre, int unidades, String description) {
+    public Producto(int id, String marca, int precio, Category category, String nombre, int unidades, String description, String image) {
         this.id = id;
         this.marca = marca;
         this.precio = precio;
@@ -31,6 +24,17 @@ public class Producto {
         this.nombre = nombre;
         this.unidades = unidades;
         this.description = description;
+        this.image = image;
+    }
+
+    public Producto(String marca, int precio, Category category, String nombre, int unidades, String description, String image) {
+        this.marca = marca;
+        this.precio = precio;
+        this.category = category;
+        this.nombre = nombre;
+        this.unidades = unidades;
+        this.description = description;
+        this.image = image;
     }
 
     public int getId() {
@@ -87,5 +91,13 @@ public class Producto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

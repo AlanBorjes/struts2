@@ -96,13 +96,20 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" style="margin-top: 15px"
                      ng-repeat="producto in data.productoList | filter : busqueda">
-                    <div class="card rounded shadow-sm border-0">
+                    <div class="card" id="cards" >
                         <div class="card-body">
+                            <div class="row ">
+                                <div (click)="modify(producto.id)" ng-click="modify(producto.id)" data-bs-toggle="modal" data-bs-target="#ModaDetall">
+
+                                <div class="col-12  justify-content-center" id="caja">
+                            <img  class="img-fluid rounded d-block m-l-none" style="height: 150px; width: 100%; " src="{{producto.image}}">
+                            </div>
                             <h2 class="card-title">{{producto.nombre|uppercase}}</h2>
                             <h4>{{producto.marca}}</h4>
                             <p class="small text-muted font-italic">{{producto.precio | currency:"$"}} -
                                 Unidades disponibles:
                                 {{producto.unidades}} </p>
+                                </div>
                             <div class="row justify-content-center">
                                 <button type="button" ng-click="modify(producto.id)" data-bs-toggle="modal"
                                         data-bs-target="#ModalModificar" class="btn col-3"
@@ -113,6 +120,7 @@
                                 <button class="btn col-3" ng-click="delete(producto.id)"
                                         style=" margin-left: 10px; background-color: #D62828; color: white;"><i
                                         class="fas fa-trash"></i></button>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -479,8 +487,8 @@
         }
 
         $scope.delete = (id) => {
-            let categoryDelete = new Object();
-            categoryDelete.id = id
+            let productodelet = new Object();
+            productodelet.id = id
             Swal.fire({
                 title: '¿Quieres eliminar El producto?',
                 showCancelButton: true,
@@ -495,14 +503,14 @@
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
                         url: 'http://localhost:8080/Strust2CRUD/delete',
-                        data: "params=" + JSON.stringify(categoryDelete),
+                        data: "params=" + JSON.stringify(productodelet),
                     }).then(function successCallback(response) {
                         console.log(response.data);
                         $scope.errorDescription = false;
                         $scope.errorName = false;
                         $scope.category = {}
                         $scope.goRegister = true;
-                        if (response.result.delete != false){
+                        if (response.result != false){
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -518,9 +526,9 @@
                             })
                         }
                         $scope.getAll()
-                    }.catch( function errorCallback(response) {
+                    }, function errorCallback(response) {
                         console.log("aaa");
-                    }));
+                    });
                 }
             })
 

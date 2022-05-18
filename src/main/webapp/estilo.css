@@ -1,5 +1,6 @@
 
 #cards{
+    cursor: pointer;
     background: rgb(255, 255, 255);
     border-radius: 0.4em;
     -webkit-box-shadow: 0.3em 0.3em 0.7em #00000015;
@@ -10,7 +11,107 @@
 }
 
 #cards:hover {
-    border: rgba(33, 201, 110, 0.3) 0.2em solid;
+    border: rgba(33, 230, 255, 0.81) 0.2em solid;
 
 }
+#cards2 {
+    cursor: pointer;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 255, .2);
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    -webkit-box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+}
+
+#cards2:hover {
+    -webkit-box-shadow: -12px 12px 2px -1px rgba(0, 0, 255, .2);
+    box-shadow: -12px 12px 2px -1px rgba(0, 0, 255, .2);
+}
+
+
+
+
+/*#cards2 {*/
+/*    --border-radius: 15px;*/
+/*    --border-width: 4px;*/
+/*    -webkit-appearance: none;*/
+/*    -moz-appearance: none;*/
+/*    appearance: none;*/
+/*    position: relative;*/
+/*    padding: 1em 2em;*/
+/*    border: 0;*/
+/*    background: rgb(5, 5, 22);*/
+/*    font-size: 18px;*/
+/*    font-weight: 500;*/
+/*    color: #fff;*/
+/*    z-index: 2;*/
+/*    border-radius: 15px;*/
+/*}*/
+
+/*#cards2::after {*/
+/*    --m-i: linear-gradient(#000, #000);*/
+/*    --m-o: content-box, padding-box;*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    padding: var(--border-width);*/
+/*    border-radius: var(--border-radius);*/
+/*    background-image: conic-gradient(*/
+/*            #488cfb,*/
+/*            #29dbbc,*/
+/*            #ddf505,*/
+/*            #ff9f0e,*/
+/*            #e440bb,*/
+/*            #655adc,*/
+/*            #488cfb*/
+/*    );*/
+/*    -webkit-mask-image: var(--m-i), var(--m-i);*/
+/*    mask-image: var(--m-i), var(--m-i);*/
+/*    -webkit-mask-origin: var(--m-o);*/
+/*    mask-origin: var(--m-o);*/
+/*    -webkit-mask-clip: var(--m-o);*/
+/*    mask-composite: exclude;*/
+/*    -webkit-mask-composite: destination-out;*/
+/*    -webkit-filter: hue-rotate(0);*/
+/*    filter: hue-rotate(0);*/
+/*    -webkit-animation: rotate-hue linear 500ms infinite;*/
+/*    animation: rotate-hue linear 500ms infinite;*/
+/*    -webkit-animation-play-state: paused;*/
+/*    animation-play-state: paused;*/
+/*}*/
+
+/*#cards2:hover::after {*/
+/*    -webkit-animation-play-state: running;*/
+/*    animation-play-state: running;*/
+/*}*/
+
+/*@-webkit-keyframes rotate-hue {*/
+/*    to {*/
+/*        -webkit-filter: hue-rotate(1turn);*/
+/*        filter: hue-rotate(1turn);*/
+/*    }*/
+/*}*/
+
+/*@keyframes rotate-hue {*/
+/*    to {*/
+/*        -webkit-filter: hue-rotate(1turn);*/
+/*        filter: hue-rotate(1turn);*/
+/*    }*/
+/*}*/
+
+/*#cards2,*/
+/*#cards2::after {*/
+/*    -webkit-box-sizing: border-box;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*#cards2:active {*/
+/*    --border-width: 5px;*/
+/*}*/
+
 

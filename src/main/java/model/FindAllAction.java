@@ -17,6 +17,11 @@ public class FindAllAction extends ActionSupport {
         return SUCCESS;
     }
 
+    public String get() throws Exception {
+        categoryList = categoryDao.findAll();
+        return SUCCESS;
+    }
+
     public List<Category> getCategoryList() {
         return categoryList;
     }

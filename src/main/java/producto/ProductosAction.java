@@ -30,6 +30,7 @@ public class ProductosAction extends ActionSupport {
         return SUCCESS;
     }
 
+
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
