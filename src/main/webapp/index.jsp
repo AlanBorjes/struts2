@@ -53,6 +53,8 @@
         </div>
     </div>
 </nav><!-- Fin Menu -->
+
+
 <div class="container">
     <div class="row ">
         <div class="d-md-flex justify-content-center ">
@@ -106,7 +108,7 @@
                             </div>
                             <h2 class="card-title">{{producto.nombre|uppercase}}</h2>
                             <h4>{{producto.marca}}</h4>
-                            <p class="small text-muted font-italic">{{producto.precio | currency:"$"}} -
+                            <p class="small text-muted font-italic"> Precio {{producto.precio | currency:"$"}} <br>
                                 Unidades disponibles:
                                 {{producto.unidades}} </p>
                                 </div>
@@ -134,7 +136,6 @@
     <!-- Fin tabla -->
 </div>
 
-
 <!-- Inicio Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -147,14 +148,14 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Nombre del Producto :</label>
+                    <label class="col-sm-10 col-form-label">Nombre del Producto :<font style="color: #D62828">*</font> </label>
                     <div class="col-sm-12">
                         <input ng-change="validate()" type="text" class="form-control" ng-model="producto.nombre" required  />
                         <span style="color: #D62828;" ng-show="errorNombre">El nombre es requerido</span>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Marca del Producto</label>
+                    <label class="col-sm-10 col-form-label">Marca del Producto:<font style="color: #D62828">*</font> </label>
                     <div class="col-sm-12">
                         <input ng-change="validate()" type="text" class="form-control" ng-model="producto.marca" required/>
                         <span style="color: #D62828;" ng-show="errorMarca">La marca es requerida</span>
@@ -163,7 +164,7 @@
 
                 <div class="mb-3 row">
                     <div class="mb-3 row">
-                        <label for="mySelect" class="col-5">Categoria del Producto:</label>
+                        <label for="mySelect" class="col-5">Categoria del Producto:<font style="color: #D62828">*</font> </label>
 
                         <div class="col-sm-12">
                             <select ng-change="validate()" class="form-select" aria-label="Default select example"   name="mySelect" id="mySelect"
@@ -175,7 +176,7 @@
                 </div>
                 <div class="mb-3 row">
                     <div class="col-6 row">
-                        <label class="col-sm-10 col-form-label">Precio del Producto</label>
+                        <label class="col-sm-10 col-form-label">Precio del Producto:<font style="color: #D62828">*</font> </label>
                         <div class="col-sm-12">
                             <input ng-change="validate()" type="number" class="form-control" ng-model="producto.precio" />
                             <span style="color: #D62828;" ng-show="errorPrecio" required>El precio es requerido</span>
@@ -183,7 +184,7 @@
                     </div>
 
                     <div class="col-6 row">
-                        <label class="col-sm-10 col-form-label">Unidades disponibles</label>
+                        <label class="col-sm-10 col-form-label">Unidades disponibles:<font style="color: #D62828">*</font> </label>
                         <div class="col-sm-12">
                             <input ng-change="validate()" type="number" class="form-control" ng-model="producto.unidades" required/>
                             <span style="color: #D62828;" ng-show="errorUnidades">La Unidades es requerido</span>
@@ -191,22 +192,31 @@
                     </div>
 
                 </div>
-
                 <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Descripcion del Producto</label>
+                    <label class="col-sm-10 col-form-label">Descripcion del Producto:<font style="color: #D62828">*</font> </label>
                     <div class="col-sm-12">
                         <textarea ng-change="validate()" rows="5" cols="30" class="form-control" aria-label="With textarea" ng-model="producto.description" required></textarea>
                         <span style="color: #D62828;"  ng-show="errorDescription">La Unidades es requerido</span>
 
                     </div>
                 </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-10 col-form-label">Imagen del Producto:<font style="color: #D62828">*</font> </label>
+                    <div class="image-upload">
+                        <img [src]="imageSrc" style="max-width:100px;max-height:100px"/>
+                        <input name="imageUrl" type="file" accept="image/*"  ng-model="producto.image" ng-change="onFileSelected($event)" />
+                        <br /><br />
+                        base64 Output : <br />
+                        {{base64Output}}
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <a class="btn btn-info btn-primary"  ng-click="register()" data-bs-dismiss="modal">Save
-                </a>
+                <button class="btn btn-info btn-primary"  ng-disabled='disabledFlag'  ng-click="register()" data-bs-dismiss="modal">Guardar</button>
+
             </div>
         </div>
     </div>
@@ -288,42 +298,49 @@
                     <input type="hidden" class="form-control" aria-describedby="emailHelp" ng-model="id" />
                     <label class="col-sm-10 col-form-label">Nombre del Producto :</label>
                     <div class="col-sm-12">
-                        <input type="text" class="form-control" ng-model="nombre" />
+                        <input ng-change="validateUpdate()"  type="text" class="form-control" ng-model="nombre" />
+                        <span style="color: #D62828;" ng-show="errorNombre">El nombre es requerido</span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-10 col-form-label">Marca del Producto:</label>
                     <div class="col-sm-12">
-                        <input type="text" class="form-control" ng-model="marca" />
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Precio del Producto</label>
-                    <div class="col-sm-12">
-                        <input type="number" class="form-control" ng-model="precio" />
+                        <input ng-change="validateUpdate()"  type="text" class="form-control" ng-model="marca" />
+                        <span style="color: #D62828;" ng-show="errorMarca">La marca es requerida</span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                         <label for="mySelect2" class="col-5">Categoria del Producto:</label>
 
                     <div class="col-sm-12">
-                        <select class="form-select" aria-label="Default select example"   name="mySelect2" id="mySelect2"
+                        <select ng-change="validateUpdate()" class="form-select" aria-label="Default select example"   name="mySelect2" id="mySelect2"
                                 ng-options="category.nombre for category in catef.categoryList track by category.id"
                                 ng-model="category"></select>
+                        <span style="color: #D62828;" ng-show="errorCategoria">La Categoria es requerido</span>
                     </div>
 
                 </div>
-
                 <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Unidades del Producto</label>
-                    <div class="col-sm-12">
-                        <input type="number" class="form-control" ng-model="unidades" />
+                    <div class="col-6 row">
+                        <label class="col-sm-10 col-form-label">Unidades disponibles</label>
+                        <div class="col-sm-12">
+                            <input ng-change="validateUpdate()" type="number" class="form-control" ng-model="unidades" />
+                            <span style="color: #D62828;" ng-show="errorUnidades">La Unidades es requerido</span>
+                        </div>
+                    </div>
+                    <div class="col-6 row" >
+                        <label class="col-sm-10 col-form-label">Precio del Producto</label>
+                        <div class="col-sm-12">
+                            <input ng-change="validateUpdate()" type="number" class="form-control" ng-model="precio" />
+                            <span style="color: #D62828;" ng-show="errorPrecio" required>El precio es requerido</span>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-10 col-form-label">Descripcion del Producto</label>
                     <div class="col-sm-12">
-                        <textarea rows="5" class="form-control" aria-label="With textarea" ng-model="description"></textarea>
+                        <textarea ng-change="validateUpdate()" rows="5" class="form-control" aria-label="With textarea" ng-model="description"></textarea>
+                        <span style="color: #D62828;"  ng-show="errorDescription">La Descripcion  es requerido</span>
                     </div>
                 </div>
             </div>
@@ -331,20 +348,37 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <a class="btn btn-info btn-primary" ng-click="modificar()" data-bs-dismiss="modal">Modificar
-                </a>
+                <button class="btn btn-info btn-primary"    ng-disabled='disabledFlag2'  ng-click="modificar()" data-bs-dismiss="modal">Modificar</button>
             </div>
         </div>
     </div>
 </div>
-
-</body>
 <!-- Fin Modal -->
+</body>
+
 
 <script>
     let prototipo = angular.module("prototipo", ['ngRoute']);
 
     prototipo.controller("controladorProductos", function ($scope, $http) {
+        $scope.disabledFlag = true;
+        $scope.disabledFlag2 = false;
+        $scope.base64Output = "";
+
+        $scope.onFileSelected=(event)=> {
+            this.convertFile(event.target.files[0]).subscribe(base64 => {
+                this.base64Output = base64;
+            });
+        }
+        $scope.convertFile=(File)  => {
+            const result = new ReplaySubject<string>(1);
+            const reader = new FileReader();
+            reader.readAsBinaryString(file);
+            reader.onload = (event) => result.next(btoa(event.target.result.toString()));
+            return result;
+        }
+
+
         $http({
             method: 'GET',
             headers: {
@@ -367,7 +401,7 @@
         }).then(function successCallback(response) {
             $scope.data = response.data
         }, function errorCallback(response) {
-            console.log("aaa");
+            console.log("mal");
         });
 
         $scope.getAll = () => {
@@ -417,7 +451,7 @@
                             timer: 1500
                         })
                         $scope.getAll()
-                    }.catch (function errorCallback(response) {
+                    },(function errorCallback(response) {
                         console.log("aadadaa");
                     }));
                 }
@@ -426,15 +460,17 @@
         }
 
         $scope.register = () => {
-        Swal.fire({
+            console.log($scope.producto)
+            $scope.producto.img = $scope.producto.img
+            console.log($scope.producto)
+
+            Swal.fire({
             title: '¿Quieres registrar la categoría?',
             showCancelButton: true,
             confirmButtonText: 'Guardar',
             cancelButtonText: 'Cancelar',
             icon: 'question'
         }).then((result) => {
-            console.log($scope.producto)
-
             if (result.isConfirmed) {
                 $http({
                     method: 'POST',
@@ -469,7 +505,6 @@
             }
         })
         }
-
 
         $scope.modify = (id) => {
             for (let i = 0; i < $scope.data.productoList.length; i++) {
@@ -534,24 +569,60 @@
 
         }
 
-        $scope.validate = () => {
-            if ($scope.producto.nombre == undefined || $scope.producto.nombre === "") {
+        $scope.validateUpdate= () =>{
+            if ($scope.nombre == undefined || $scope.nombre === "") {
                 $scope.errorNombre = true;
+                $scope.errorMarca = false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag2 = true;
             } else
-            if ($scope.producto.marca == undefined || $scope.producto.marca === "") {
+            if ($scope.marca == undefined || $scope.marca === "") {
                 $scope.errorMarca = true;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false
+                $scope.disabledFlag2 = true;
             } else
-            if($scope.producto.precio == undefined || $scope.producto.precio === ""){
-                $scope.errorPrecio = true;
-            }else
-            if($scope.producto.category == undefined || $scope.producto.category === ""){
+            if($scope.category == undefined || $scope.category === ""){
                 $scope.errorcategory = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag2 = true;
             }else
-            if($scope.producto.unidades == undefined || $scope.producto.unidades === ""){
+            if($scope.precio == undefined || $scope.precio === ""){
+                $scope.errorPrecio = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag2 = true;
+            }else
+            if($scope.unidades == undefined || $scope.unidades === ""){
                 $scope.errorUnidades = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag2 = true;
             }else
-            if($scope.producto.description == undefined || $scope.producto.description === ""){
+            if($scope.description == undefined || $scope.description === ""){
                 $scope.errorDescription = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.disabledFlag2 = true;
             }else {
                 $scope.errorMarca = false;
                 $scope.errorNombre= false;
@@ -559,6 +630,74 @@
                 $scope.errorcategory = false;
                 $scope.errorUnidades = false;
                 $scope.errorDescription = false;
+                $scope.disabledFlag2 = false;
+                ;
+            }
+        }
+
+        $scope.validate = () => {
+            if ($scope.producto.nombre == undefined || $scope.producto.nombre === "") {
+                $scope.errorNombre = true;
+                $scope.errorMarca = false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = true;
+            } else
+            if ($scope.producto.marca == undefined || $scope.producto.marca === "") {
+                $scope.errorMarca = true;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false
+                $scope.disabledFlag = true;
+            } else
+            if($scope.producto.category == undefined || $scope.producto.category === ""){
+                $scope.errorcategory = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = true;
+            }else
+            if($scope.producto.precio == undefined || $scope.producto.precio === ""){
+                $scope.errorPrecio = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = true;
+            }else
+            if($scope.producto.unidades == undefined || $scope.producto.unidades === ""){
+                $scope.errorUnidades = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = true;
+            }else
+            if($scope.producto.description == undefined || $scope.producto.description === ""){
+                $scope.errorDescription = true;
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.disabledFlag = true;
+            }else {
+                $scope.errorMarca = false;
+                $scope.errorNombre= false;
+                $scope.errorPrecio = false;
+                $scope.errorcategory = false;
+                $scope.errorUnidades = false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = false
+                ;
             }
         }
     });

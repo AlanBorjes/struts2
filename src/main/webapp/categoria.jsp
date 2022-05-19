@@ -119,12 +119,14 @@
         <!-- Fin tabla -->
     </div>
 </div>
+
+<!-- Inicio del modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
-                    Registro producto
+                    Registro Categoria
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -132,7 +134,7 @@
                 <div class="modal-body">
                     <div class="mb-3 row">
                         <label class="col-sm-10 col-form-label" for="validationDefault01">Nombre de la
-                            categoria :</label>
+                            categoria :<font style="color: #D62828">*</font>  </label>
                         <div class="col-sm-12">
                             <input ng-change="validate()" type="text" class="form-control"
                                    ng-model="category.nombre" id="validationDefault01" required />
@@ -141,11 +143,11 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-sm-10 col-form-label">Descripcion de la categoria</label>
+                        <label class="col-sm-10 col-form-label">Descripcion de la categoria:<font style="color: #D62828">*</font> </label>
                         <div class="col-sm-12">
                                 <textarea ng-change="validate()" rows="5" cols="30" class="form-control"
                                           aria-label="With textarea" ng-model="category.descripcion" required></textarea>
-                            <span style="color: #D62828;" ng-show="errorDescription">La Unidades es
+                            <span style="color: #D62828;" ng-show="errorDescripcion">La Descripcion es
                                     requerido</span>
 
                         </div>
@@ -155,14 +157,16 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <a class="btn btn-info btn-primary" type="submit" ng-click="register()"
-                       data-bs-dismiss="modal">Save
-                    </a>
+                    <button   ng-disabled='disabledFlag' class="btn btn-info btn-primary" type="submit" ng-click="register()"
+                            data-bs-dismiss="modal"> Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<!-- Fin Modal -->
+
+<!-- Inicio del modal Modificar-->
 <div class="modal fade" id="ModalModificar" tabindex="-1" aria-labelledby="ModalModificar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -177,14 +181,18 @@
                     <input type="hidden" class="form-control" aria-describedby="emailHelp" ng-model="id" />
                     <label class="col-sm-10 col-form-label">Nombre de la categoria:</label>
                     <div class="col-sm-12">
-                        <input type="text" class="form-control" ng-model="nombre" />
+                        <input ng-change="validateUpdate()" type="text" class="form-control" ng-model="nombre" />
+                        <span style="color: #D62828;" ng-show="errorNombre">El nombre es
+                                    requerido</span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-10 col-form-label">Descripcion del categoria</label>
                     <div class="col-sm-12">
-                            <textarea rows="5" class="form-control" aria-label="With textarea"
+                            <textarea ng-change="validateUpdate()" rows="5" class="form-control" aria-label="With textarea"
                                       ng-model="descripcion"></textarea>
+                        <span style="color: #D62828;" ng-show="errorDescripcion">La Descripcion es
+                                    requerido</span>
                     </div>
                 </div>
             </div>
@@ -192,12 +200,14 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
-                <a class="btn btn-info btn-primary" ng-click="modificar()" data-bs-dismiss="modal">Modificar
-                </a>
+                <button ng-disabled='disabledFlag2' class="btn btn-info btn-primary" ng-click="modificar()" data-bs-dismiss="modal">Modificar</button>
             </div>
         </div>
     </div>
 </div>
+<!-- Fin Modal -->
+
+<!-- Inicio del modal Detalles -->
 <div class="modal fade" id="ModaDetall" tabindex="-1" aria-labelledby="ModaDetall" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -236,12 +246,16 @@
         </div>
     </div>
 </div>
-<!-- Inicio de modal modificar -->
+<!-- Fin Modal -->
+
 
 <script>
     let categoria = angular.module("categoria", ['ngRoute']);
 
     categoria.controller("controladorcategoria", function ($scope, $http) {
+        $scope.disabledFlag = true;
+        $scope.disabledFlag2 = false;
+
         $http({
             method: 'GET',
             headers: {
@@ -449,6 +463,40 @@
 
         }
 
+        $scope.validate = () =>{
+            if($scope.category.nombre == undefined || $scope.category.nombre === ""){
+                $scope.errorNombre= false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = true;
+            }else
+            if($scope.category.descripcion == undefined || $scope.category.descripcion === ""){
+                $scope.errorNombre= false;
+                $scope.errorDescription = true;
+                $scope.disabledFlag = true;
+            }else {
+                $scope.errorNombre= false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag = false
+                ;
+            }
+        }
+        $scope.validateUpdate = ()=>{
+            if($scope.nombre == undefined || $scope.nombre === ""){
+                $scope.errorNombre= false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag2 = true;
+            }else
+            if($scope.descripcion == undefined || $scope.descripcion === ""){
+                $scope.errorNombre= false;
+                $scope.errorDescription = true;
+                $scope.disabledFlag2 = true;
+            }else {
+                $scope.errorNombre= false;
+                $scope.errorDescription = false;
+                $scope.disabledFlag2= false
+                ;
+            }
+        }
 
     });
 
