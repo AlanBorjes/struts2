@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<html ng-app="prototipo" lang="en">
+<html data-ng-app="prototipo" lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -20,10 +20,7 @@
 
 </head>
 
-<body ng-controller="controladorProductos" style=" background: #e8cbc0;
-    background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
-    background: linear-gradient(to right, #e8cbc0, #636fa4);
-    min-height: 100vh;">
+<body ng-controller="controladorProductos" style=" background: #FAF7F2;">
 <!-- Menu -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -59,14 +56,14 @@
     <div class="row ">
         <div class="d-md-flex justify-content-center ">
             <div class="row">
-                <div style="margin-top: 20px" class="col-12">
+                <div style="margin-top: 20px;  color: #325C59;" class="col-12">
                     <h1 style="font-size: 50px; font-family: Georgia; text-align: center">Tienda Don Pancho
                     </h1>
                 </div>
                 <div style="margin-top: 20px" class="col-12">
                     <div class="row" style="margin-left: 10px;">
                             <div class="col-12 d-md-flex justify-content-center  " >
-                                <h1 style="font-family: Palatino">Productos</h1>
+                                <h1 style="font-family: Palatino; color: #325C59;">Productos</h1>
                             </div>
                         <div class="col-10">
                             <div class="row">
@@ -77,7 +74,7 @@
                             </div>
                         </div>
                         <div class="col-1">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="btn "  style="background-color: #47A6FF; color: #fff"  data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                 <i class="fas fa-plus"></i>
                             </button>
@@ -103,9 +100,6 @@
                             <div class="row ">
                                 <div (click)="modify(producto.id)" ng-click="modify(producto.id)" data-bs-toggle="modal" data-bs-target="#ModaDetall">
 
-                                <div class="col-12  justify-content-center" id="caja">
-                            <img  class="img-fluid rounded d-block m-l-none" style="height: 150px; width: 100%; " src="{{producto.image}}">
-                            </div>
                             <h2 class="card-title">{{producto.nombre|uppercase}}</h2>
                             <h4>{{producto.marca}}</h4>
                             <p class="small text-muted font-italic"> Precio {{producto.precio | currency:"$"}} <br>
@@ -115,12 +109,12 @@
                             <div class="row justify-content-center">
                                 <button type="button" ng-click="modify(producto.id)" data-bs-toggle="modal"
                                         data-bs-target="#ModalModificar" class="btn col-3"
-                                        style="background-color: #FFD700 "><i class="fas fa-edit"></i></button>
+                                        style="background-color: #FFD600; color: white; "><i class="fas fa-edit"></i></button>
                                 <button type="button" ng-click="modify(producto.id)" data-bs-toggle="modal"
                                         data-bs-target="#ModaDetall" class="btn col-3"
-                                        style="background-color: #0FBAFC; margin-left: 10px;"><i class="fas fa-info"></i></button>
-                                <button class="btn col-3" ng-click="delete(producto.id)"
-                                        style=" margin-left: 10px; background-color: #D62828; color: white;"><i
+                                        style="background-color: #0FBAFC; margin-left: 10px; color: white;"><i class="fas fa-info"></i></button>
+                                <button class="btn col-3"  ng-click="delete(producto.id)"
+                                        style=" margin-left: 10px; background-color: #FF5F4E; color: white;"><i
                                         class="fas fa-trash"></i></button>
                             </div>
                             </div>
@@ -164,9 +158,9 @@
 
                 <div class="mb-3 row">
                     <div class="mb-3 row">
+                        <div class="col-sm-12">
                         <label for="mySelect" class="col-5">Categoria del Producto:<font style="color: #D62828">*</font> </label>
 
-                        <div class="col-sm-12">
                             <select ng-change="validate()" class="form-select" aria-label="Default select example"   name="mySelect" id="mySelect"
                                     ng-options="category.nombre for category in catef.categoryList track by category.id"
                                     ng-model="producto.category" required></select>
@@ -200,19 +194,9 @@
 
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-10 col-form-label">Imagen del Producto:<font style="color: #D62828">*</font> </label>
-                    <div class="image-upload">
-                        <img [src]="imageSrc" style="max-width:100px;max-height:100px"/>
-                        <input name="imageUrl" type="file" accept="image/*"  ng-model="producto.image" ng-change="onFileSelected($event)" />
-                        <br /><br />
-                        base64 Output : <br />
-                        {{base64Output}}
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-secondary"  ng-click="clear()" data-bs-dismiss="modal">
                     Close
                 </button>
                 <button class="btn btn-info btn-primary"  ng-disabled='disabledFlag'  ng-click="register()" data-bs-dismiss="modal">Guardar</button>
@@ -295,7 +279,7 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3 row">
-                    <input type="hidden" class="form-control" aria-describedby="emailHelp" ng-model="id" />
+                    <input type="hidden" disabled class="form-control" aria-describedby="emailHelp" ng-model="id" />
                     <label class="col-sm-10 col-form-label">Nombre del Producto :</label>
                     <div class="col-sm-12">
                         <input ng-change="validateUpdate()"  type="text" class="form-control" ng-model="nombre" />
@@ -364,20 +348,6 @@
         $scope.disabledFlag = true;
         $scope.disabledFlag2 = false;
         $scope.base64Output = "";
-
-        $scope.onFileSelected=(event)=> {
-            this.convertFile(event.target.files[0]).subscribe(base64 => {
-                this.base64Output = base64;
-            });
-        }
-        $scope.convertFile=(File)  => {
-            const result = new ReplaySubject<string>(1);
-            const reader = new FileReader();
-            reader.readAsBinaryString(file);
-            reader.onload = (event) => result.next(btoa(event.target.result.toString()));
-            return result;
-        }
-
 
         $http({
             method: 'GET',
@@ -461,9 +431,6 @@
 
         $scope.register = () => {
             console.log($scope.producto)
-            $scope.producto.img = $scope.producto.img
-            console.log($scope.producto)
-
             Swal.fire({
             title: '¿Quieres registrar la categoría?',
             showCancelButton: true,
@@ -486,6 +453,8 @@
                     $scope.errorNombre = false;
                     $scope.category = {}
                     $scope.goRegister = true;
+
+                    if(response.data.result.registered == true){
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -493,7 +462,15 @@
                         showConfirmButton: false,
                         timer: 2000
                     })
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'El producto ya existe  ',
+                        })
+                    }
                     $scope.getAll()
+                    $scope.clear()
                 }, function errorCallback(response) {
                     Swal.fire({
                         icon: 'error',
@@ -699,6 +676,15 @@
                 $scope.disabledFlag = false
                 ;
             }
+        }
+
+        $scope.clear = () =>{
+            $scope.producto.nombre = "";
+            $scope.producto.marca = "";
+            $scope.producto.precio = "";
+            $scope.producto.unidades = "";
+            $scope.producto.description = "";
+            $scope.disabledFlag = true;
         }
     });
 </script>

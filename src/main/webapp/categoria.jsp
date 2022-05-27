@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<html ng-app="categoria" lang="en">
+<html data-ng-app="categoria" lang="en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -17,10 +17,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body ng-controller="controladorcategoria" style=" background: #e8cbc0;
-    background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
-    background: linear-gradient(to right, #e8cbc0, #636fa4);
-    min-height: 100vh;">
+<body ng-controller="controladorcategoria" style=" background: #FAF7F2;">
 
 <!-- Menu -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,15 +46,15 @@
     <div class="row ">
         <div class="d-md-flex justify-content-center ">
             <div class="row">
-                <div style="margin-top: 20px" class="col-12">
+                <div style="margin-top: 20px; color: #325C59;" class="col-12">
                     <h1 style="font-size: 50px; font-family: Georgia; text-align: center">Tienda Don Pancho
                     </h1>
 
                 </div>
-                <div style="margin-top: 20px" class="col-12">
+                <div style="margin-top: 12px" class="col-12">
                     <div class="row justify-content-center" style="margin-left: 10px;">
                         <div class="col-12 d-md-flex justify-content-center  ">
-                            <h1 style="font-family: Palatino">Categorias</h1>
+                            <h1 style="font-family: Palatino; color: #325C59;">Categorias</h1>
                         </div>
                         <div class="col-10">
                             <div class="row">
@@ -103,10 +100,10 @@
                                     <input type="hidden" ng-model="category.id"  />
                                     <button type="button" ng-click="modify(category.id)" data-bs-toggle="modal"
                                             data-bs-target="#ModalModificar" class="btn col-3"
-                                            style="background-color: #FFD700 "><i class="fas fa-edit"></i></button>
+                                            style="background-color: #FFD600; color: white; "><i class="fas fa-edit"></i></button>
 
                                     <button class="btn col-3" ng-click="delete(category.id)"
-                                            style=" margin-left: 10px; background-color: #D62828; color: white;"><i
+                                            style=" margin-left: 10px; background-color: #FF5F4E; color: white;"><i
                                             class="fas fa-trash"></i></button>
                                 </div>
                             </div>
@@ -154,7 +151,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" ng-click="clear()" data-bs-dismiss="modal">
                         Close
                     </button>
                     <button   ng-disabled='disabledFlag' class="btn btn-info btn-primary" type="submit" ng-click="register()"
@@ -179,9 +176,9 @@
             <div class="modal-body">
                 <div class="mb-3 row">
                     <input type="hidden" class="form-control" aria-describedby="emailHelp" ng-model="id" />
-                    <label class="col-sm-10 col-form-label">Nombre de la categoria:</label>
+                    <label  class="col-sm-10 col-form-label">Nombre de la categoria:</label>
                     <div class="col-sm-12">
-                        <input ng-change="validateUpdate()" type="text" class="form-control" ng-model="nombre" />
+                        <input ng-change="validateUpdate()" disabled type="text" class="form-control" ng-model="nombre" />
                         <span style="color: #D62828;" ng-show="errorNombre">El nombre es
                                     requerido</span>
                     </div>
@@ -350,7 +347,6 @@
                     });
                 }
             })
-
         }
 
         $scope.modify = (id) => {
@@ -437,7 +433,7 @@
                             data: "params=" + JSON.stringify($scope.category),
                         }).then(function successCallback(response) {
                             console.log(response);
-                            if (response.result) {
+                            if (response.data.result.registered == true) {
                                 Swal.fire({
                                     position: 'top-end',
                                     icon: 'success',
@@ -445,9 +441,15 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                            }
-
+                            }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'La categoria ya existe  ',
+                            })
+                        }
                             $scope.getAll()
+                            $scope.clear()
                         }, function errorCallback(response) {
                             Swal.fire({
                                 icon: 'error',
@@ -480,6 +482,7 @@
                 ;
             }
         }
+
         $scope.validateUpdate = ()=>{
             if($scope.nombre == undefined || $scope.nombre === ""){
                 $scope.errorNombre= false;
@@ -498,8 +501,11 @@
             }
         }
 
-    });
-
+        $scope.clear = () =>{
+            $scope.category.nombre = ""
+            $scope.category.descripcion =""
+            $scope.disabledFlag = true;
+        }});
 </script>
 
 <script src="https://kit.fontawesome.com/afd8979cda.js" crossorigin="anonymous"></script>

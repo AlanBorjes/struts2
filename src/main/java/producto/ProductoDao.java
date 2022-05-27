@@ -15,12 +15,12 @@ public class ProductoDao {
     Statement statement;
 
 
-    public boolean register(Producto producto){
+        public boolean register(Producto producto){
 
         boolean state = false;
         try{
             con = ConnectionMysql.getConnection();
-            String query = "insert into productos(marca, precio, categoria, nombre, unidades, descripcion,image) values(?,?,?,?,?,?,?);";
+            String query = "insert into productos(marca, precio, categoria, nombre, unidades, descripcion) values(?,?,?,?,?,?);";
             pstm = con.prepareStatement(query);
             pstm.setString(1, producto.getNombre());
             pstm.setInt(2, producto.getPrecio());
@@ -28,7 +28,6 @@ public class ProductoDao {
             pstm.setString(4,producto.getNombre());
             pstm.setInt(5,producto.getUnidades());
             pstm.setString(6,producto.getDescription());
-            pstm.setString(7,producto.getImage());
             state = pstm.executeUpdate() == 1;
         }catch (SQLException ex) {
             ex.printStackTrace();
@@ -60,7 +59,7 @@ public class ProductoDao {
         try {
             System.out.println(producto);
             con = ConnectionMysql.getConnection();
-            String query = "UPDATE tienda.productos SET  marca = ?, precio = ?, categoria = ?, nombre = ?,unidades= ?, descripcion = ?, image = ? WHERE id = ?;\n";
+            String query = "UPDATE tienda.productos SET  marca = ?, precio = ?, categoria = ?, nombre = ?,unidades= ?, descripcion = ? WHERE id = ?;\n";
             pstm = con.prepareStatement(query);
             pstm.setString(1, producto.getMarca());
             pstm.setInt(2, producto.getPrecio());
@@ -68,8 +67,7 @@ public class ProductoDao {
             pstm.setString(4, producto.getNombre());
             pstm.setInt(5, producto.getUnidades());
             pstm.setString(6,producto.getDescription());
-            pstm.setString(7,producto.getImage());
-            pstm.setInt(8,producto.getId());
+            pstm.setInt(7,producto.getId());
             state = pstm.executeUpdate() == 1;
         }catch (SQLException ex){
             ex.printStackTrace();
@@ -84,7 +82,7 @@ public class ProductoDao {
         try{
 
             con = ConnectionMysql.getConnection();
-            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion,productos.image from productos;";
+            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion from productos;";
             statement = con.createStatement();
             rs = statement.executeQuery(query);
             while(rs.next()){
@@ -95,7 +93,6 @@ public class ProductoDao {
                 producto.setNombre(rs.getString("nombre"));
                 producto.setUnidades(rs.getInt("unidades"));
                 producto.setDescription(rs.getString("descripcion"));
-                producto.setImage(rs.getString("image"));
                 Category category = new Category();
                 int opc = rs.getInt("categoria");
                 CategoryDao categoryDao = new CategoryDao();
@@ -119,7 +116,7 @@ public class ProductoDao {
         try {
             System.out.println(category);
             con = ConnectionMysql.getConnection();
-            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion ,productos.image from tienda.productos where categoria= ?;";
+            String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion from tienda.productos where categoria= ?;";
             pstm = con.prepareStatement(query);
             pstm.setInt(1,category.getId());
             rs = pstm.executeQuery();
@@ -131,7 +128,6 @@ public class ProductoDao {
                 producto.setNombre(rs.getString("nombre"));
                 producto.setUnidades(rs.getInt("unidades"));
                 producto.setDescription(rs.getString("descripcion"));
-                producto.setImage(rs.getString("image"));
                 Category categoryy = new Category();
                 int opc = rs.getInt("categoria");
                 CategoryDao categoryDao = new CategoryDao();

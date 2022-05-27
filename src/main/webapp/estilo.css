@@ -1,7 +1,7 @@
 
 #cards{
     cursor: pointer;
-    background: rgb(255, 255, 255);
+    background  : #FDFDFB;
     border-radius: 0.4em;
     -webkit-box-shadow: 0.3em 0.3em 0.7em #00000015;
     box-shadow: 0.3em 0.3em 0.7em #00000015;
