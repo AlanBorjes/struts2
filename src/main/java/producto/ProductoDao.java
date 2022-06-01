@@ -2,6 +2,7 @@ package producto;
 
 import model.Category;
 import model.CategoryDao;
+import org.jetbrains.annotations.NotNull;
 import utils.ConnectionMysql;
 
 import java.sql.*;
@@ -15,7 +16,7 @@ public class ProductoDao {
     Statement statement;
 
 
-        public boolean register(Producto producto){
+    public boolean register(Producto producto){
 
         boolean state = false;
         try{
@@ -37,7 +38,7 @@ public class ProductoDao {
         return state;
     }
 
-    public boolean delete(Producto producto){
+    public boolean delete(@NotNull Producto producto){
         boolean state = false;
         try{
             con = ConnectionMysql.getConnection();
@@ -55,7 +56,6 @@ public class ProductoDao {
 
     public boolean update(Producto producto){
         boolean state = false;
-        System.out.println(producto.getCategory());
         try {
             System.out.println(producto);
             con = ConnectionMysql.getConnection();
@@ -80,7 +80,6 @@ public class ProductoDao {
     public List<Producto> findAll(){
         List<Producto> productoList = new ArrayList<>();
         try{
-
             con = ConnectionMysql.getConnection();
             String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion from productos;";
             statement = con.createStatement();
@@ -112,9 +111,7 @@ public class ProductoDao {
 
     public List<Producto> findbyCategory(Category category){
         List<Producto> productoList = new ArrayList<>();
-        System.out.println(category);
         try {
-            System.out.println(category);
             con = ConnectionMysql.getConnection();
             String query = "select productos.id,productos.marca,productos.precio,productos.categoria, productos.nombre, productos.unidades,productos.descripcion from tienda.productos where categoria= ?;";
             pstm = con.prepareStatement(query);
@@ -142,8 +139,6 @@ public class ProductoDao {
         }
         return productoList;
     }
-
-
     public void closeConnection(){
         try{
             if(con != null){

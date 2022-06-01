@@ -20,15 +20,12 @@ public class ProductoFindAllAction extends ActionSupport {
     ProductoDao productoDao = new ProductoDao();
     List<Producto> productoList = new ArrayList<>();
 
-
     public String execute() throws Exception {
         productoList = productoDao.findAll();
         return SUCCESS;
     }
 
     public String info() throws Exception {
-        System.out.println("Voy bien");
-        System.out.println("Mi id ");
         Gson gs = new Gson();
         category = gs.fromJson(params, Category.class);
         System.out.println(category);

@@ -28,7 +28,6 @@ public class CategoryDao {
         }
         return state;
     }
-
     public List<Category> findAll(){
         List<Category> categoryList = new ArrayList<>();
         try{
@@ -53,14 +52,13 @@ public class CategoryDao {
         }
         return categoryList;
     }
-    public Category findby(int idd){
+    public Category findby(int id){
         Category category = new Category();
-        System.out.println(idd);
         try {
             con = ConnectionMysql.getConnection();
             String query = "select * from category where category.id= ?;";
             pstm = con.prepareStatement(query);
-            pstm.setInt(1,idd);
+            pstm.setInt(1,id);
             rs = pstm.executeQuery();
             if (rs.next()){
                 category.setId(rs.getInt("id"));
@@ -89,7 +87,6 @@ public class CategoryDao {
         }
         return state;
     }
-
     public boolean update(Category category){
         boolean state = false;
         try {
@@ -108,8 +105,6 @@ public class CategoryDao {
         return state;
 
     }
-
-
     public void closeConnection(){
         try{
             if(con != null){

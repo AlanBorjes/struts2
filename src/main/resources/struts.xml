@@ -27,7 +27,7 @@
         <action name="findCategory"  class="producto.ProductoFindAllAction" method="info" >
             <result name="success" type="json"/>
         </action>
-        <action name="registerProducto" class="producto.ProductosAction" method="execute">
+            <action name="registerProducto" class="producto.ProductosAction" method="execute">
             <result name="input" type="json"/>
             <result name="success" type="json"/>
         </action>

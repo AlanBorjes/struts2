@@ -28,6 +28,7 @@
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.9.0" />
           <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.1.1" />
           <element id="library" level="project" name="Maven: org.apache.struts:struts2-json-plugin:2.5.30" />
+          <element id="library" level="project" name="Maven: org.jetbrains:annotations:23.0.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
